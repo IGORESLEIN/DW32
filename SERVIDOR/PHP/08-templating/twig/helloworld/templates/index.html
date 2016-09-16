@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HelloWorls</title>
+</head>
+<body>
+
+<h1>{{ members }}</h1>
+
+<ul>
+    {% for user in users %}
+        <li>{{ user|e }}</li>
+    {% endfor %}
+</ul>
+
+<h1>Books:</h1>
+
+<ul>
+    {% for book in books %}
+        <li>{{ book.title|e }}</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

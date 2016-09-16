@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script language="javascript">
+    var num1 = prompt("Introduzca el primer numero");
+    var num2 = prompt("Introduzca el segundo numero");
+    var divisores1 = [];
+    var divisores2 = [];
+    var resultado = [];
+    
+    for(var i=2;i<=num1;i++){
+        if((num1%i)==0){
+            divisores1.push(i);
+        }
+    }
+    
+    for(var i=2;i<=num2;i++){
+        if((num2%i)==0){
+            divisores2.push(i);
+        }
+    }
+    
+    for(var i=0;i<divisores1.length;i++){
+        for(var x=0;x<divisores2.length;x++){
+        
+            var comp1 = divisores1[i];
+            var comp2 = divisores2[x];
+            if (comp1==comp2){
+            resultado.push(comp2);
+            }
+            
+        }
+    }
+    document.write(resultado.toString());
+    
+    </script>
+</head>
+</html>

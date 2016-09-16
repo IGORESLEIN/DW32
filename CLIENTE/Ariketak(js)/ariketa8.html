@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script language="javascript">
+    var num1 = prompt("Introduzca el un numero");
+    var mod2 = (num1%2)==0;
+    var mod3 = (num1%3)==0;
+    var mod5 = (num1%5)==0;
+    var mod7 = (num1%7)==0;
+    var i;
+    
+    for(i=0;i<4;i++){
+        if(i==0){
+            if(mod2==true){
+                document.writeln(num1 + " es divisible por 2 ")
+                }
+    
+        }
+        else if(i==1){
+            if(mod3==true){
+                document.writeln(num1 + " es divisible por 3 ")
+                }
+        }
+        else if(i==2){
+            if(mod5==true){
+                document.writeln(num1 + " es divisible por 5 ")
+                }
+        }
+        else if(i==3){
+            if(mod7==true){
+                document.writeln(num1 + " es divisible por 7 ")
+                }
+        }
+        else{
+            document.writeln("es un numero primo")
+        }
+    }
+    
+    </script>
+</head>
+</html>
+

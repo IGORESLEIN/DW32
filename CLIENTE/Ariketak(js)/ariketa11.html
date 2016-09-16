@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script language="javascript">
+    var num1 = prompt("Introduzca el un numero");
+    var primo = true;
+    for(var i=2;i<num1;i++){
+        if((num1%i)==0){
+            primo = false;
+        }
+        
+    }
+    if(primo){
+    document.write(num1 + " es primo");
+    }
+    else{
+    document.write(num1 + " no es primo");
+    }
+    </script>
+</head>
+</html>
