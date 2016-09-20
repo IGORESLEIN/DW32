@@ -1,0 +1,37 @@
+<doctype html>
+<html>
+<head>
+	<script language="javascript">
+
+	
+
+		function numero_letras(frase){
+
+		var vocales = ["a","e","i","o","u"];
+		var frase2 = frase.split("");
+		var cont = 0;
+			for (var i = 0; i<frase2.length;i++) {
+				for (var x = 0; x<vocales.length;x++){
+					if (frase2[i] == vocales[x]){
+						cont++;
+
+					}
+					else{
+
+					}
+				}
+			}
+		return cont;
+		}
+
+	var frase = prompt ("Introduzca su frase:");
+
+	document.write("En la frase hay "+ numero_letras(frase) + " vocales.");
+	
+	</script>
+
+
+</head>
+<body>
+</body>
+</html>

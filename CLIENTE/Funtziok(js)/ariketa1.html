@@ -1,19 +1,48 @@
 <doctype html>
 <html>
 <head>
-
 	<script language="javascript">
-	
-	function letras(frase){
-	    
-	}
-	
-	var nombreUsuario = prompt ("Introduzca su nombre:");
 
-	document.write("hello " + nombreUsuario);
+		function contFrase(frase){
+			
+		var letrasEspacios = frase.split("");
+        var fraseSinEspacios = "";
+    	var letras = "abcdefghijklmnñopqrstuvwxyz";
+    	var LETRAS = letras.toUpperCase();
+    	var letrak = letras.split("");
+    	var LETRAK = LETRAS.split("");
+    	var contL = 0;
+    	var contl = 0;
+        
+    
+        for(var i=0; i<letrasEspacios.length; i++) {
+            if(letrasEspacios[i] != " ") {
+            fraseSinEspacios += letrasEspacios[i];
+            }
+        }
+        
+        for(var i=0; i<fraseSinEspacios.length; i++){
+        	for (var x in letrak){
+        		if(fraseSinEspacios[i]==letrak[x]){
+        			contl++;
+        		}
+        	}
+        }
+        
+        for(var i=0; i<fraseSinEspacios.length; i++){
+        	for (var x in LETRAK){
+        		if(fraseSinEspacios[i]==LETRAK[x]){
+        			contL++;
+        		}
+        	}
+        }
+        return "la frase contiene " + fraseSinEspacios.length + " letras de las cuales " + contL + " son mayusculas y " + contl + " minusculas";
+        }
+        
+        var frase= prompt ("Introduzca una frase:");
+    	document.write(contFrase(frase));
+
 	</script>
-
-
 </head>
 <body>
 </body>

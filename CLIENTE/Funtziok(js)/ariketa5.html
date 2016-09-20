@@ -1,0 +1,47 @@
+<doctype html>
+<html>
+<head>
+
+
+
+	<script language="javascript">
+	
+	function palindromo(frase){
+	    var fraseOriginal = frase.toLowerCase();
+        var letrasEspacios = fraseOriginal.split("");
+        var fraseSinEspacios = "";
+        
+        for(var i in letrasEspacios) {
+            if(letrasEspacios[i] != " ") {
+            fraseSinEspacios += letrasEspacios[i];
+            }
+        }     
+ 
+        var letras = fraseSinEspacios.split("");
+        var letrasReves = fraseSinEspacios.split("").reverse();
+        var iguales = true;
+        
+        for(i in letras) {
+            if(letras[i] != letrasReves[i]) {
+            iguales = false;
+            }
+        }
+        
+	 if(iguales){
+	     return frase + " es una frase palindromo";
+	 }
+	 else{
+	    return frase + " no es una frase palindromo";
+	 }
+	 
+	}
+	
+	var frase= prompt ("Introduzca una frase:");
+    document.write(palindromo(frase));
+	</script>
+
+
+</head>
+<body>
+</body>
+</html>
