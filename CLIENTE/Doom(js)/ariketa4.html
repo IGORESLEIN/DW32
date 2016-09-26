@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+    <script type="text/javascript">
+        function acceder(){
+            
+            var kuadroa = document.getElementById("cuadro");
+            var textua = document.getElementsByTagName("p");
+            for(var i = 0 ; i < textua.length ; i++){
+                    kuadroa.innerHTML += textua[i].innerHTML + "<br>";
+            }
+
+        }
+        function borrar(){
+            var kuadroa = document.getElementById("cuadro");
+            kuadroa.innerHTML = "";
+        }
+    </script>
+   <title>Ver todos los párrafos</title> 
+<style id="estiloa" type="text/css">
+   #cuadro { width: 400px; height: 200px; border: 1px black solid; float: right; }
+   p { font-size: 1em; font-family: arial; }
+</style>
+</head>
+<body>
+   <h1>Acceso a los parrafos</h1>
+   <div id="cuadro"></div>
+     <p>Este es el primer parrafo de esta página</p>
+     <p>Este es el segundo párrafo</p>
+     <p>Y este el tercero</p>
+     <p onclick="acceder()">Pulsa en este cuarto párrafo para volver 
+         a verlos todos en el recuadro de la derecha.</p>
+     <p onclick="borrar()">Y pulsa en el quinto para borrar el 
+         recuadro de la derecha.</p> 
+</body>
+</html>
