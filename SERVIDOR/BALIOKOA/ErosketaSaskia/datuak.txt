@@ -1,0 +1,9 @@
+<?php
+session_start();
+$user=$_SESSION['erabiltzailea'];
+$konexioa=mysql_connect('localhost','root','') or die ('ezin da datubasera konektatu');
+$datubasea=mysql_select_db('saskia') or die ('datu basea ezin izan da hautatu');
+$query="SELECT * FROM erabiltzaileak WHERE izena=$user" or die ("ez du selectak ondo egin");
+$datuak=mysql_query($query, $konexioa) or die ('selekta gaizki exekutatu da');
+
+?>

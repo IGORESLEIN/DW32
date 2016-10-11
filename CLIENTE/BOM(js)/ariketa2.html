@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ejercicio2BOM</title>
+	<style type="text/css">
+
+	</style>
+</head>
+<body>
+	<div>
+		<input type="button" value="Informacion" onClick="muestraInfo()">
+	</div>
+</body>
+	<script type="text/javascript">
+		function muestraInfo(){
+			var urlpag = document.URL;
+			var navegador = navigator.appCodeName;
+			var titulo = document.title;
+			var formularios = document.forms.length;
+			var ancho = window.outerWidth;
+			var alto = window.outerHeight;
+			var tamHistorial = history.length;
+			
+			document.write("Url de la pagina: "+urlpag);
+			document.write("</br>");
+			document.write("Navegador: "+navegador);
+			document.write("</br>");
+			document.write("Titulo: "+titulo);
+			document.write("</br>");
+			document.write("Formularios: "+formularios);
+			document.write("</br>");
+			document.write("Ancho de la pagina, x: "+ancho+" Altura de la pagina, y: "+alto);
+			if(tamHistorial >= 15){
+				alert("Deja de navegar, el historial esta que echa humo!");
+			}
+		}
+	</script>
+</html>

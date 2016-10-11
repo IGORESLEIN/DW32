@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+   <title>Manipular nodos</title> 
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+function subirVentana(){	
+
+	window.moveBy(0, -10);
+
+}
+function moverVentanaIzda(){	
+
+	window.moveBy(-10, 0);
+
+}
+function moverVentanaDer(){	
+
+	window.moveBy(10, 0);
+
+}
+function bajarVentana(){	
+
+	window.moveBy(0, 10);
+
+}
+function ventanaGrande(){	
+
+	var ancho = window.outerWidth; 
+	var alto = window.outerHeight;
+	window.resizeBy(ancho+ancho, alto+alto);
+
+}
+function ventanaPeque(){	
+
+	var ancho = window.outerWidth; 
+	var alto = window.outerHeight;
+	window.resizeBy(ancho-ancho/2, alto-alto/2);
+
+}
+function ventanacerrar(){	
+
+	window.close();
+
+}
+
+</script>
+</head>
+<body>
+  <div id="botonUp">
+     <input type="button" name="añadir" onclick="subirVentana()" value="Arriba">
+  </div>
+  <div id="botonLft">
+     <input type="button" name="añadir" onclick="moverVentanaIzda()" value="Izquierda">
+  </div>
+  <div id="botonRgt">
+     <input type="button" name="añadir" onclick="moverVentanaDer()" value="Derecha">
+  </div>
+  <div id="botonDwn">
+     <input type="button" name="añadir" onclick="bajarVentana()" value="Abajo">
+  </div>
+  <div id="botonDouble">
+     <input type="button" name="añadir" onclick="ventanaGrande()" value="Mas grande">
+  </div>
+  <div id="botonHalf">
+     <input type="button" name="añadir" onclick="ventanaPeque()" value="Mas pequeno">
+  </div>
+<div id="cerrar">
+     <input type="button" name="añadir" onclick="ventanacerrar()" value="Cerrar">
+  </div>
+     
+</body>
+</html>

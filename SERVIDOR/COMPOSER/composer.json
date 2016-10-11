@@ -1,0 +1,7 @@
+{
+    "name": "webdev/servidor/composer",
+    "require": {
+        "phpmailer/phpmailer": "*",
+        "raveren/kint": "0.9"
+    }
+}

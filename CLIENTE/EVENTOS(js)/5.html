@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>5</title>
+<script type="text/javascript">
+/*
+    5.	Crea esta lista de enlaces, al pasar el ratón por encima,
+    muestra la dirección a la cual apuntan en el editor de texto.
+*/
+    function link(element){
+        var link = element.href;
+        
+        var enlace = document.getElementById("texto");
+        enlace.placeholder = link;
+        
+    }
+</script>
+</head>
+
+<body>
+    <ul>
+        <li><a href="http://www.adobe.com/es/" onmouseover="link(this)">Adobe</a></li>
+        <li><a href="http://www.apple.com/es/" onmouseover="link(this)">Apple</a></li>
+        <li><a href="https://www.ibm.com/es-es/" onmouseover="link(this)">IBM</a></li>
+    </ul>
+    <input type="text" id="texto"/>
+</body>
+
+</html>
