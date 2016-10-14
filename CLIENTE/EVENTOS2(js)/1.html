@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="text/javascript">
+
+        window.onload = function(){
+            var par = document.getElementsByTagName('p');
+                for (var i = 0; i < par.length; i++){
+                    par[i].addEventListener("click", cambiarColor,false);
+                }
+        }
+        function cambiarColor(){
+            
+            this.style.color = "red";
+            
+        }
+        
+    </script>
+  </head>
+  <body>
+    
+    <p id="cambiar">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </p>
+    
+    <p id="cambiar">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    </p>
+  
+  </body>
+</html>
