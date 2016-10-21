@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {background-color:green;}
+
+</style>
+<script>
+document.addEventListener("mousemove", posicion, false);
+function posicion(event){
+
+            var posX = event.pageX;
+            var posY = event.pageY;
+            
+            var width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+            
+            var height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+            
+            color(posX,posY,width,height);
+            
+}
+ function color(posX,posY,width,height){
+
+            if ( posX < (width*10/100)
+               | posX > (width-(width*10/100))
+               | posY < (height*10/100)
+               | posY > (height-(height*10/100))
+               )
+               {
+                document.body.style.backgroundColor = "red";
+               }
+        else if (posX < (width*20/100)
+               | posX > (width-(width*20/100))
+               | posY < (height*20/100)
+               | posY > (height-(height*20/100))
+               )
+               {
+                document.body.style.backgroundColor = "yellow";
+               }
+            else {
+                document.body.style.backgroundColor = "green";
+               }
+        }
+      
+</script>
+</head>
+<body>
+
+</body>
+</html>

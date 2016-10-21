@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    #cuadrado{
+        
+        margin:200px;
+        border: solid 3px green;
+        background:blue;
+        width:297px;
+        height:297px;
+        position: absolute;
+    }
+</style>
+<script>
+window.onload=function(){
+
+    function centrar(){
+        var cuadrado = document.getElementById("cuadrado");
+        var width = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth;
+        
+        var height = window.innerHeight
+        || document.documentElement.clientHeight
+        || document.body.clientHeight;
+          
+        var posX = document.getElementById("cuadrado").offsetTop;
+        var posY = document.getElementById("cuadrado").offsetLeft;
+        
+        posY = 189;
+        posX = 502;
+        cuadrado.style.top = posY+"px";
+        cuadrado.style.left = posX+"px";
+ 
+    } 
+    centrar;
+
+}
+           
+</script>
+<body>
+    <div id="cuadrado"></div>
+</body>
+</html>

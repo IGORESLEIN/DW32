@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    #cuadrado{
+        
+        margin:200px;
+        border: solid 3px green;
+        background:blue;
+        width:300px;
+        height:300px;
+        position: absolute;
+    }
+</style>
+<script>
+window.onload=function(){document.onkeydown = desplazar}
+
+function desplazar(objeto){
+    
+    var posX = document.getElementById("cuadrado").offsetTop;
+    var posY = document.getElementById("cuadrado").offsetLeft;
+    
+    var tecla = objeto.which;    
+        
+        switch (tecla){
+            case 37 :   
+                cuadrado.style.left = posY-220+"px"; break;
+            case 38 : 
+                cuadrado.style.top = posX-220+"px"; break;
+            case 39 :  
+                cuadrado.style.left = posY-180+"px"; break;
+            case 40 : 
+                cuadrado.style.top = posX-180+"px"; break;
+                
+        default :alert("1, 2, 3, pruebe otra vez!");
+        }
+    }
+</script>
+<body>
+    <div id="cuadrado"></div>
+</body>
+</html>

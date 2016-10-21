@@ -7,12 +7,15 @@
             var par = document.getElementsByTagName('p');
                 for (var i = 0; i < par.length; i++){
                     par[i].addEventListener("click", cambiarColor,false);
+                    par[i].addEventListener("dblclick", cambiarColor,false);
                 }
         }
-        function cambiarColor(){
-            
-            this.style.color = "red";
-            
+        function cambiarColor(evento){
+            if (evento.type == "click"){
+                this.style.color = "red";
+            }else if(evento.type == "dblclick"){
+                this.style.color = "pink";
+            }
         }
         
     </script>

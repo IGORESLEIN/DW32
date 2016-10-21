@@ -1,33 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head> 
+<style> 
+	.boton{ width:50px; height:50px;} 
+	#resultado {font-size:40px;} 
+</style>
+ <script type="text/javascript">
 
-    <!-- Bootstrap -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     window.onload = function(){
+            var boton = document.getElementsByName('boton');
+                for (var i = 0; i < boton.length; i++){
+                    boton[i].addEventListener("click", numero,false);
+                    
+                }
+        } 
+        function numero(){
+          var resultado = document.getElementById("resultado");
+          var num = this.value;
+          resultado.innerHTML = resultado.innerHTML + " " + num;
+        }
+    </script>
+</head>
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  </body>
+<body> 
+<input type="button" id="boton0" name="boton" value="0" class="boton"> 
+<input type="button" id="boton1" name="boton" value="1" class="boton"> 
+<input type="button" id="boton2" name="boton" value="2" class="boton"> 
+<input type="button" id="boton3" name="boton" value="3" class="boton"> 
+<input type="button" id="boton4" name="boton" value="4" class="boton"> 
+<input type="button" id="boton5" name="boton" value="5" class="boton"> 
+<input type="button" id="boton6" name="boton" value="6" class="boton"> 
+<input type="button" id="boton7" name="boton" value="7" class="boton"> 
+<input type="button" id="boton8" name="boton" value="8" class="boton"> 
+<input type="button" id="boton9" name="boton" value="9" class="boton"><br> 
+<div id="resultado"></div> 
+</body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>   
+<script type="text/javascript">
+var cerrar;
+var ventana;
+
+function abrirVentana(){
+    
+    ventana = window.open("","_blank", "height=200, width=200",false);
+    cerrar = setTimeout(cerrarVentana, 3000);
+    
+    ventana.addEventListener("click", f5, false);
+    ventana.addEventListener("mousemove", f5, false);
+}
+        
+function cerrarVentana(){
+            ventana.close();
+        }
+
+function f5(){
+            clearTimeout(cerrar);
+            cerrar = setTimeout(cerrarVentana, 1000);
+        }
+
+</script>
+</head>
+<body>
+<button class="btn btn-primary" onclick="abrirVentana()" type="button">!W_o_W!</button>
+</body>
+</html>
