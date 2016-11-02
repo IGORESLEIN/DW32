@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function getValores(){
+            
+            
+            var nombre = document.getElementById("nombre").value;
+            var apellido = document.getElementById("apellido").value;
+            var direccion = document.getElementById("direccion").value;
+            
+            if (nombre == "" || apellido == "" || direccion == ""){
+                alert("rellena todos los campos");
+            }
+            else{
+                alert(nombre + "\n" + apellido + "\n" + direccion);
+            }
+            
+        }
+    </script>
+</head>
+<body>
+<form name="formulario">
+  Nombre:
+  <input type="text" name="nombre" id="nombre" />
+  <br/>
+  Apellido:
+  <input type="text" name="apellido" id="apellido" />
+  <br/>
+  Direccion:
+  <input type="text" name="direccion" id="direccion" />
+  <br/>
+  
+  
+  <input type="submit" value="Comprobar" onclick="getValores()"/>
+  
+</form>
+ 
+</body>
+</html>

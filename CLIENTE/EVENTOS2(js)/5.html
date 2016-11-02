@@ -2,26 +2,37 @@
 <html>
 <head>
 <script type="text/javascript">
-     window.onload = function(){
-          var textArea = document.getElementById("descripcion");
-          textArea.addEventListener("keypress", caracteres);
-          
-        } 
-    function caracteres(event){
-      console.log(this.value);
-      var maxCont = 140;
-      var contador = this.value.length;
-      console.log(contador);
-      
-      var contFalta = maxCont - contador;
-      if (contador >=140){
-      alert();    
-      }
-      var area = document.getElementById("letras");
+window.onload = function(){
+	var textA = document.getElementById("descripcion");
+	textA.addEventListener("keypress",caracter);
 
-      area.innerHTML = contFalta + "/" + maxCont + " caracteres";
-    }
+}
 
+function caracter(event){
+
+	console.log(this.value);
+	var maxCont = 140;
+	this.setAttribute("maxlength", maxCont);
+
+	var contador = this.value.length;
+	console.log(contador);
+
+	var restante = maxCont - contador;
+
+	var caracteres = document.getElementById("letras");
+	var caracterCod = event.which || event.keyCode;
+	console.log(caracterCod);
+
+	if(caracterCod>=97 && caracterCod<=122){
+		this.style.backgroundColor = "white";
+	}
+	else{
+		this.style.backgroundColor = "pink";
+	}
+	caracteres.innerHTML = restante + "/" + maxCont + " Codigo: " + caracterCod;
+	
+
+}
 </script>
 </head>
 <body>
@@ -31,3 +42,4 @@
 </div>
 </body>
 </html>
+

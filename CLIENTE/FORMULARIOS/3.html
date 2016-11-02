@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    function comprobar(){
+            
+            
+            var nombre = document.getElementById("nombre").value;
+            var apellido = document.getElementById("apellidos").value;
+            var telefono = document.getElementById("telefono").value;
+            var email = document.getElementById("email").value;
+            var problema = document.getElementById("problema").value;
+            
+            // 
+            
+            if (nombre == "" || apellido == "" || telefono == null || email == "" || problema == ""){
+                alert("rellena todos los campos");
+            }
+            else{
+                alert(nombre + "\n" + apellido + "\n" + telefono + "\n" + email + "\n" + problema);
+            }
+            
+        }
+</script>
+</head>
+<body>
+<form name="formulario">
+  Nombre:
+  <input type="text" name="nombre" id="nombre">
+  <br/>
+  Apellidos:
+  <input type="text" name="apellido" id="apellidos">
+  <br/>
+  Telefono:
+  <input type="number" name="telefono" id="telefono">
+  <br/>
+  Email:
+  <input type="email" name="email" id="email">
+  <br/>
+  Problema: 
+  <textarea id="problema" name="problema" maxlength=100>
+  </textarea>
+  <br/>
+  <input type="submit" value="Enviar" onclick="comprobar()">
+  
+</form>
+ 
+</body>
+</html>

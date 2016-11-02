@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function color(){
+        var cuadros = document.getElementById("cuadrados");
+        var colores = document.getElementById("colores");
+        var getCuadro = cuadros.options[cuadros.selectedIndex].value;
+        var getColor = colores.options[colores.selectedIndex].value;
+
+            switch(getCuadro) {
+              case getCuadro = "cuadrado1":
+                document.getElementById("cuadrado1").style.backgroundColor = getColor;
+                break;
+              case getCuadro = "cuadrado2":
+                document.getElementById("cuadrado2").style.backgroundColor = getColor;
+                break;
+              case getCuadro = "cuadrado3":
+                document.getElementById("cuadrado3").style.backgroundColor = getColor;
+                break;
+              case getCuadro = "cuadrado4":
+                document.getElementById("cuadrado4").style.backgroundColor = getColor;
+                break;
+              
+              default:
+                alert("No has elegido todas las opciones");
+                break;
+            }
+        }
+    </script>
+    <style type="text/css">
+      .cuadrado {
+        background-color: purple;
+        top: 100px;
+        width:200px;
+        height:200px;
+        margin-right: 10px;
+      }
+    </style>
+</head>
+<body>
+<form name="formulario" >
+        <p>Cuadrados</p>
+            <select id = "cuadrados" name = "cuadrados">
+                <option value="cuadrados" >Cuadrados</option>
+                <option value="cuadrado1" >cuadrado1</option>
+                <option value="cuadrado2" >cuadrado2</option>
+                <option value="cuadrado3" >cuadrado3</option>
+                <option value="cuadrado4" >cuadrado4</option>
+            </select>
+        <p>Colores</p>
+            <select id = "colores" name = "colores">
+                <option value="colores" >Colores</option>
+                <option value="green" >verde</option>
+                <option value="blue" >azul</option>
+                <option value="red">rojo</option></option></option>
+                <option value="yellow" >amarillo</option>
+            </select>
+        <br/>
+        <br/>
+        <button type="button" onclick="color()">Dale Color</button>
+        <br/>
+        <br/>
+</form>
+        <!--cuadrados-->
+        <div id = "cuadrado1" class = "cuadrado"></div>
+        <br/>
+        <div id = "cuadrado2" class = "cuadrado"></div>
+        <br/>
+        <div id = "cuadrado3" class = "cuadrado"></div>
+        <br/>
+        <div id = "cuadrado4" class = "cuadrado"></div>
+</body>
+</html>    
