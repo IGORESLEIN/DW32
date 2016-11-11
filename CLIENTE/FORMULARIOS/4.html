@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+
+var cont = 6;
+function siguiente(event) { 
+    
+    var inputs = document.getElementsByTagName("input");
+    var actual = document.activeElement;
+    
+    if(event.keyCode == 13){ 
+        for (var i = 0 ; i < inputs.length ; i++){
+            if ( inputs[i] == actual )
+            inputs[(i + 1)].focus();
+        }
+        if (actual.value == "" || actual.value == null){
+            actual.setAttribute("class", "red") ;
+        }
+        else {
+            actual.setAttribute("class", "normal") ;
+            
+        }
+    }
+    
+}
+function comprobar(){
+    
+    var nombre = document.getElementById("nombre").value;
+    var apellido = document.getElementById("apellidos").value;
+    var direccion = document.getElementById("direccion").value;
+    var poblacion = document.getElementById("poblacion").value;
+    var postal = document.getElementById("postal").value;
+    var provincia = document.getElementById("provincia").value;
+    
+    if(nombre != "" & apellido != "" & direccion != "" & poblacion != null & postal != null & provincia != "")
+   
+        document.getElementById("enviar").removeAttribute("disabled");
+
+}
+
+
+</script>
+<style type="text/css">
+.red{
+    background-color : red ;
+}
+.normal{
+    background-color : white ;
+}
+</style>
+</head>
+<body>
+    
+<form name="formulario">
+<table>
+    <tr>
+        <td>  
+            Nombre:
+            <br/>
+            <input type="text" name="nombre" id="nombre" autofocus onkeydown = "siguiente(event)" onblur="comprobar()">
+            <br/>
+        </td>
+        <td>
+            Apellidos:
+            <br/>
+            <input type="text" name="apellido" id="apellidos" onkeydown = "siguiente(event)" onblur="comprobar()">
+            <br/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Direccion:
+            <br/>
+            <input type="text" name="direccion" id="direccion" onkeydown = "siguiente(event)" onblur="comprobar()">
+            <br/>
+        </td>
+        <td>
+            Poblacion:
+            <br/>
+            <input type="number" name="poblacion" id="poblacion" onkeydown = "siguiente(event)" onblur="comprobar()">
+            <br/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Codigo Postal:
+            <br/>
+            <input type="number" name="postal" id="postal" onkeydown = "siguiente(event)" onblur="comprobar()">
+            <br/>
+        </td>
+        <td>
+            Provincia
+            <br/>
+            <input type="text" name="provincia" id="provincia" onkeydown = "siguiente(event)" onblur="comprobar()">
+            <br/>
+        </td>
+    </tr>
+</table>
+
+<input id="enviar" type="submit" value="Enviar" disabled >
+<input id="reset" type="reset" value="Reset">
+  
+</form>
+ 
+</body>
+</html>
+
+<!--
+4.	Crea una página con un formulario que nos pedirá datos personales cada uno en un cuadro de texto:
+nombre, apellidos, dirección, población, código postal, provincia. 
+Ordena los campos de manera  que queden en dos columnas. 
+Al final del formulario habrá un botón de enviar y otro de limpiar el formulario. 
+Al iniciar la página el cuadro de texto del nombre deberá tener el puntero listo para escribir 
+y cuando pulsemos la tecla enter saltara al siguiente campo. 
+En caso de que no se haya rellenado el campo deberá  poner el fondo rojo y no permitirá pulsar el botón de envió.
