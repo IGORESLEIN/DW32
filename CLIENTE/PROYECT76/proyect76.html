@@ -3,126 +3,206 @@
 <head>
 <script language="javascript">
 
-//variables que necesitaremos despues
-var valorCarta; // variable para definir el numero aleatorio como carta
-var numRandom; //variable para un numero aleatorio
-var miCuenta = 0; //variable para mi puntuacion
-var banca = 0; //variable para la puntuacion de la banca
+//variables para despues ***** significa que cada jugador necesita la suya propia
+var valorCarta; // variable para definir el numero aleatorio como carta (sera cambiante)
+var numRandom; //variable para un numero aleatorio (sera cambiante)
+var miCuenta = []; //variable para la puntuacion de los usuarios (es una array para guardar la puntuacion de cada usuario) ******************************
+var banca=0; //variable para la puntuacion de la banca
 var repetidas = []; //variable para guardar los numeros aleatorios que han salido
-var miDinero = 50 //cada vez que empezemos una nueva partida nos daran 50 euros para apostar
-var heApostado = false; //variable para controlar si he apostado
+var miDinero = [] //cada vez que empezemos una nueva partida nos daran 50 euros para apostar (cada usuario tendra su cuenta de dinero)********************************
+var heApostado = []; //variable para controlar si he apostado (cada usuario necesita de su propio contador, sera un array de booleans)********************************
+var numPlayers; //variable que guarda el numero de jugadores para que luego la banca salte solo cuando todos se hayan plantado
+var plantados = []; //variable para guardar los usuarios plantados con booleans
+var losers = []; //variable que guardara los que hayan perdido
 
+//funcion que hara posible elgir numero de jugadores y crear los divs para ellos
+//esta funcion cargara despues de decirle cuantos jugadores seremos pero creara los divs desde 0
+//cuando cargue la pagina solo veremos un titulo
+//cuantos jugadores sois??
+//y botones con los diferentes numeros de jugadores, en vez de coger un value de un texto o algo ejecutara con un valor distinto de "tantos" segun el boton
+//boton de 2 jugadores ejecutara jugadores(2) y lo mismo para los demas
+function jugadores(tantos, nuevo){
 
-function restart(){
-    if(miDinero > 0){
-        
-        //reinicializamos variables y restauramos los divs
-        miCuenta = 0; 
-        banca = 0; 
-        repetidas = []; 
-        heApostado = false;
-        //reiniciaremos los divs de las cartas
-        //cogeremos los divs principales
-        var divUsuario = document.getElementById("usuario"); //div del usuario
-        var divBanca = document.getElementById("banca"); //div de la banca
-        //mediante for reiniciaremos todos los divs que contengan los divs maestros
-        for (var i = 0; i < 13 ; i++){
-            divUsuario.getElementsByTagName("div")[i].innerHTML="";
-            divBanca.getElementsByTagName("div")[i].innerHTML="";
-        }
-        //pondremos lo que veiamos al principio del todoo
-        document.getElementById("interfaz").innerHTML=
-          " <input id='carta' type='button' value='Pedir carta' onclick='pedirCarta()'  align='center'> "
-        + " <br/> "
-        + " <input id='planto' type='button' value='Planto' onclick='planto()'  align='center'> "
-        + "<div id='apuesta' class='interfaz'></div>";
-        
-    }
+    //primero borrar el contenido de los botones dejando el unico div contenedor totalmente vacio
+    document.getElementById("jugador").innerHTML="";
     
-    else {
-        //reiniciaremos los divs de las cartas
-        //cogeremos los divs principales
-        var divUsuario = document.getElementById("usuario"); //div del usuario
-        var divBanca = document.getElementById("banca"); //div de la banca
-        //mediante for reiniciaremos todos los divs que contengan los divs maestros
-        for (var i = 0; i < 13 ; i++){
-            divUsuario.getElementsByTagName("div")[i].innerHTML="";
-            divBanca.getElementsByTagName("div")[i].innerHTML="";
+    //variables que tenemos que iniciar cuando empezemos un juego nuevo
+    repetidas = [];
+    
+    //añadir un div de usuario el cual muestra las cartas y un div de interfaz por cada jugador
+    for(var i = 0 ; i < tantos ; i++){
+        
+        //iniciar variables para cada jugador
+        if (nuevo){
+            //estas variables solo las iniciaremos si el juego es nuevo 
+            miDinero[i]=50;
         }
-        //pondremos lo que veiamos al principio del todoo
-        document.getElementById("interfaz").innerHTML=
-          "!!VETE A CASA!!"
-          + "<br> NO PIERDAS MAS DINERO ";
-    }
-   
+            //estas dos variables las iniciaremos siempre, cuando sea un juego nuevo o no
+            miCuenta[i]=0;
+            heApostado[i]=false;
+            plantados[i]=false;
+            losers[i]=false;
+        
+        //un contador de los jugadore para que despues la banca sepa cuantos jugadores tiene q esperar
+        numPlayers = tantos;
+        
+        //añadir jugadores(divs) en el div "contenedor"
+        var divJugador = document.getElementById("jugador");
+        var jugador = document.createElement("div");
+            jugador.setAttribute("id", "divUsuario"+i+"");
+            jugador.setAttribute("class", "tablero");
+            //añadir los divs de las cartas a las del jugador
+            for (var x = 0; x < 13 ; x++){
+                
+                var cartas = document.createElement("div");
+                cartas.setAttribute("id", "carta"+x);
+                cartas.setAttribute("class", "cartas");
+                jugador.appendChild(cartas);
+                
+            }
+        //añadir cada div de jugador creado al div contenedor
+        divJugador.appendChild(jugador);
+        
+        //crear una interfaz tambien por cada jugador creado
+        //crear la interfaz con sus atributos
+        var interfaz = document.createElement("div");
+            interfaz.setAttribute("id", "divInterfaz"+i);
+            interfaz.setAttribute("class", "interfaz");
+            interfaz.setAttribute("align", "center");
+            
+            //boton de pedir carta
+            var btnCarta = document.createElement("input");
+                btnCarta.setAttribute("id", "pedirCarta"+i);
+                btnCarta.setAttribute("type", "button");
+                btnCarta.setAttribute("value", "Pedir carta");
+                btnCarta.setAttribute("onclick", "pedirCarta(this.id)");
+                btnCarta.setAttribute("align", "center");
+            
+            //crear el br para que salte una linea entre los botones
+            var br1 = document.createElement("br");
+            var br2 = document.createElement("br");
+                
+            //boton para plantarse
+            var btnPlanto = document.createElement("input");
+                btnPlanto.setAttribute("id", "planto"+i);
+                btnPlanto.setAttribute("type", "button");
+                btnPlanto.setAttribute("value", "Planto");
+                btnPlanto.setAttribute("onclick", "planto(this.id)");
+                btnPlanto.setAttribute("align", "center");
+            
+            //div que va dentro de la interfaz la cual podra cambiar segun las apuestas
+            var divApuesta = document.createElement("div");
+                divApuesta.setAttribute("id", "divApuesta"+i);
+                divApuesta.setAttribute("class", "interfaz");
+            
+                //input de texto que mostrara el dinero de cada usuario
+                var txtDinero = document.createElement("input");
+                    txtDinero.setAttribute("id", "txtDinero"+i);
+                    txtDinero.setAttribute("type", "text");
+                    txtDinero.setAttribute("value", "Tu dinero: " + miDinero[i] + "€");
+                    txtDinero.setAttribute("class", "texto");
+                    txtDinero.setAttribute("readonly", "");
+        
+        //añadir todos los elementos que hemos creado al div de la interfaz
+        interfaz.appendChild(btnCarta); //boton pedir carta
+        interfaz.appendChild(br1); //salto
+        interfaz.appendChild(btnPlanto); //boton de plantarse
+        interfaz.appendChild(divApuesta); //el div cambiante para las apuestas
+        interfaz.appendChild(br2); //salto2
+        divApuesta.appendChild(txtDinero); //el input de texto que muestra el dinero del usuario
+            
+        //añadir la interfaz al div "contenedor"
+        divJugador.appendChild(interfaz);
+        
+    }//end del for que añade un usario y una interfaz por cada jugador
+    
+        
+    //crear la banca una vez que haya creado los usuarios
+    var banca = document.createElement("div");
+        banca.setAttribute("id", "divBanca");
+        banca.setAttribute("class", "tablero");
+         
+        //los divs de las cartas para la banca tambien  
+        for (var x = 0; x < 13 ; x++){
+                
+            var cartas = document.createElement("div");
+                cartas.setAttribute("id", "carta"+x);
+                cartas.setAttribute("class", "cartas");
+                banca.appendChild(cartas);
+                
+        }
+    document.getElementById("jugador").appendChild(banca);
+    
+}//end de la funcion jugadores
+
+//funcion para refrescar la pagina cuando le demos a un boton de jugar de nuevo
+//el boton aparece cuando pierdes todoo tu dinero
+function newGame(){
+    window.location.reload();
 }
 
-function pedirCarta(){
+function restart(){
+    for(var i = 0 ; i < numPlayers ; i++){
+        if(miDinero[i]==0){
+            document.getElementById("jugador").setAttribute("class", "tablero");
+            document.getElementById("jugador").setAttribute("align", "center");
+            document.getElementById("jugador").innerHTML=
+                  "<br><br>EL JUGADOR "+(i+1)+" ES MUY MALO<br>"
+                + "PODEIS DEJARLE DINERO PARA QUE SIGA PERDIENDO<br>"
+                + "O PODEIS HACER CLICK AQUI ABAJO<br>"
+                + "<input type='button' value='JUEGO NUEVO' onclick='newGame()'>";
+            break;
+        }
+        else{
+            jugadores(numPlayers, false)
+            banca=0;
+        }
+    }
+    
+}
 
+function pedirCarta(id){
+    
+    //variable que coge el ultimo caracter del id, para identificar el player para las demas funciones
+    var lastId = id.substr(10);
     //pide una carta
     getCarta();
     //muestra la carta
-    mostrar(numRandom, "usuario");
+    mostrar(numRandom, "divUsuario"+lastId);
     //hacer cuentas para que llegemos solo hasta 7'5
-    miCuenta = valorCarta + miCuenta ;
+    miCuenta[lastId] = valorCarta + miCuenta[lastId] ;
     //apostar
-    apostar();
-    if(miCuenta > 7.5){
-        //hacemos las cuentas de dinero
-        var apostado = document.getElementById("cuanto").value;
-        miDinero = miDinero - parseInt(apostado);
-        //cambiamos el contenido del div central para poner el resultado y un boton para jugar de nuevo
-        document.getElementById("interfaz").innerHTML=
-          "!YOU LOSE!"
-        + "<br/><br/>"
-        + "<input type'text' value='" + miDinero + "'>" 
-        + "<br/>"
-        + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
-    }
+    apostar(lastId);
+    //comprovar si te pasas de 7,5
+    comprobarUsuario(lastId)
+           
  
 }//end function pedirCarta
 
-function planto(){
+function planto(id){
     
-    //pide una carta
-    getCarta();
-    //muestra la carta
-    mostrar(numRandom, "banca");
-    //sumar los datos de la banca 
-    banca = banca + valorCarta;
-    //llamar de nuevo a la funcion en caso de que no este ganando con un delay de 1000 milisegundos (1sec)
-    if(banca < miCuenta & banca < 7.5){
- 
-        setTimeout(planto, 1000);
+        if(id != undefined){
+        //variable que coge el ultimo caracter del id, para identificar el player para las demas funciones
+        var lastId = id.substr(6);
+        plantados[lastId] = true;
+        }
         
-    }
-    else {
-         //cambiamos el contenido del div central para poner el resultado y un boton para jugar de nuevo
-        if(banca > 7.5){
-            //hacemos cuentas de dinero
-            var apostado = document.getElementById("cuanto").value;
-            miDinero = miDinero + parseInt(apostado);
-            document.getElementById("interfaz").innerHTML=
-              "!YOU WIN!"
-            + "<br/><br/>"
-            + "<input type'text' value='" + miDinero + "'>" 
-            + "<br/>"
-            + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
-            
-
+        if(
+              plantados[0] != false
+            & plantados[1] != false
+            & plantados[2] != false
+        ){
+            //pide una carta
+            getCarta();
+            //muestra la carta
+            mostrar(numRandom, "banca");
+            //sumar los datos de la banca 
+            banca = banca + valorCarta;
+            //comprovar si la banca ha ganado o no
+            comprobarBanca();
         }
-        else{
-            //hacemos cuentas de dinero
-            var apostado = document.getElementById("cuanto").value;
-            miDinero = miDinero - parseInt(apostado);
-            document.getElementById("interfaz").innerHTML=
-              "!YOU LOSE!"
-            + "<br/><br/>"
-            + "<input type'text' value='" + miDinero + "'>" 
-            + "<br/>"
-            + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
-        }
-    }
+        
+        
 }//end function planto
 
 function getCarta(){
@@ -189,11 +269,17 @@ function mostrar(numRandom, jugador){
     
         //Mostrar cartas en los divs
         //diferenciar usuario y banca
-        if (jugador == "usuario"){
-            var divMaestro = document.getElementById("usuario");
+        if (jugador == "divUsuario0"){
+            var divMaestro = document.getElementById("divUsuario0");
+        }
+        else if (jugador == "divUsuario1"){
+            var divMaestro = document.getElementById("divUsuario1");
+        }
+        else if (jugador == "divUsuario2"){
+            var divMaestro = document.getElementById("divUsuario2");
         }
         else{
-            var divMaestro = document.getElementById("banca");
+            var divMaestro = document.getElementById("divBanca");
         }
         var div = divMaestro.getElementsByTagName("div"); //pillar los divs de las cartas
         for ( var i = 0 ; i < div.length ; i++){
@@ -237,42 +323,147 @@ function repetido(numRandom){
     }
 }
 
-//funcion para refrescar la pagina cuando le demos a un boton de jugar de nuevo
-//el boton aparece cuando ganas o pierdes junto con ese resultado
-function newGame(){
-    window.location.reload();
-}
-
 //despues de pedir tu primera carta tienes que apostar
 //siempre has de apostar un minimo
 //mientras no apuestes no puedes pedir carta ni plantarte
-function apostar(){
+function apostar(player){
     //solo funcionara si no has apostado antes
-    if(heApostado != true){
-    disAble(true);
-    document.getElementById("apuesta").innerHTML=
-    "<input id='cuanto' type='number' onchange='disAble("+false+")'>";
+    if(heApostado[player] != true){
+    //deshabilitar los botones
+    disAble(true, player);
+    document.getElementById("divApuesta"+player).innerHTML=
+      "<input id='cuanto"+player+"' class='texto' type='number' max='" + miDinero[player] + "' min='1' onchange='disAble("+false+", "+player+")'>"
+    + "<br><input type='text' class='texto' value='Tu dinero: " + miDinero[player] + "€' readonly>";
     }
     //identificar que hemos apostado
-    heApostado = true;
+    heApostado[player] = true;
 }
 
-function disAble(disable){
+//deshabilitar los botones mientras que no se haya apostado nada
+function disAble(disable, player){
     if(disable == true){
-        document.getElementById("carta").setAttribute("disabled","");
-        document.getElementById("planto").setAttribute("disabled","")
+        document.getElementById("pedirCarta"+player).setAttribute("disabled","");
+        document.getElementById("planto"+player).setAttribute("disabled","")
     }
     else{
-        document.getElementById("carta").removeAttribute("disabled");
-        document.getElementById("planto").removeAttribute("disabled");
+        document.getElementById("pedirCarta"+player).removeAttribute("disabled");
+        document.getElementById("planto"+player).removeAttribute("disabled");
     }
     
 }
 
+function comprobarUsuario(player){
+    
+    //la variable que introducimos en la funcion tiene que pertenecer al indez del cual queremos comprobar
+    if(miCuenta[player] > 7.5){
+        
+        //si el jugador se pasa sera automaticamente plantado
+        plantados[player]=true;
+        losers[player]=true;
+        //pondremos la cuenta a 0.5 para que la banca lo de por ganado con cualquier carta pero para que despues la banca no se pase de 7.5
+        miCuenta[player]= 0.5;
+        //hacemos las cuentas de dinero
+        var apostado = document.getElementById("cuanto"+player).value;
+        miDinero[player] = miDinero[player] - parseInt(apostado);
+        //cambiamos el contenido del div central para poner el resultado y un boton para jugar de nuevo
+        document.getElementById("divInterfaz"+player).innerHTML=
+          "!YOU LOSE!"
+        + "<br/><br/>"
+        + "<input type='text' class='texto' value='Tu dinero: " + miDinero[player] + "€' readonly>" 
+        + "<br/>"
+        + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+        
+    }
+}
+
+function comprobarBanca(){ 
+
+    
+        //cambiamos el contenido del div central para poner el resultado y un boton para jugar de nuevo
+        if(banca > 7.5){
+            
+            for (var i = 0 ; i < numPlayers ; i++){
+                
+                if(!losers[i]){//si tiene 0.5 es porque se ha pasado
+                    //hacemos cuentas de dinero
+                    var apostado = document.getElementById("cuanto"+i).value;
+                    miDinero[i] = miDinero[i] + parseInt(apostado);
+                    document.getElementById("divInterfaz"+i).innerHTML=
+                          "!YOU WIN!"
+                        + "<br/><br/>"
+                        + "<input type'text' class='texto' value='Tu dinero: " + miDinero[i]+ "€' readonly>" 
+                        + "<br/>"
+                        + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+                }
+            }        
+        }//end if (banca > 7.5)
+        
+        else{
+            
+            for (var x = 0 ; x < numPlayers ; x++){
+                if(banca < miCuenta[x]){
+                    setTimeout(planto, 1000);
+                    break;
+                }//end if (banca < miCuenta[i])
+                else {
+                        if (numPlayers == 1){
+                            if (banca >= miCuenta[0]){
+                                if(!losers[x]){//solo lo hara si no ha perdido
+                                    //hacemos cuentas de dinero
+                                    var apostado = document.getElementById("cuanto"+x).value;
+                                    miDinero[x] = miDinero[x] - parseInt(apostado);
+                                    document.getElementById("divInterfaz"+x).innerHTML=
+                                          "!YOU LOSE!"
+                                        + "<br/><br/>"
+                                        + "<input type'text' class='texto' value=' Tu dinero: " + miDinero[x] + "€' readonly>" 
+                                        + "<br/>"
+                                        + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+                                }
+                            }
+                        }
+                        else if (numPlayers == 2){
+                            if (banca >= miCuenta[0] & banca >= miCuenta[1]){
+                                if(!losers[x]){//solo lo hara si no ha perdido
+                                    //hacemos cuentas de dinero
+                                    var apostado = document.getElementById("cuanto"+x).value;
+                                    miDinero[x] = miDinero[x] - parseInt(apostado);
+                                    document.getElementById("divInterfaz"+x).innerHTML=
+                                          "!YOU LOSE!"
+                                        + "<br/><br/>"
+                                        + "<input type'text' class='texto' value=' Tu dinero: " + miDinero[x] + "€' readonly>" 
+                                        + "<br/>"
+                                        + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+                                }
+                            }
+                        }
+                        else if (numPlayers == 3){
+                            if (banca >= miCuenta[0] & banca >= miCuenta[1] & banca >= miCuenta[2]){
+                                if(!losers[x]){//solo lo hara si no ha perdido
+                                    //hacemos cuentas de dinero
+                                    var apostado = document.getElementById("cuanto"+x).value;
+                                    miDinero[x] = miDinero[x] - parseInt(apostado);
+                                    document.getElementById("divInterfaz"+x).innerHTML=
+                                          "!YOU LOSE!"
+                                        + "<br/><br/>"
+                                        + "<input type'text' class='texto' value=' Tu dinero: " + miDinero[x] + "€' readonly>" 
+                                        + "<br/>"
+                                        + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+                                }
+                            }
+                        }
+                }
+            }//end for (var i = 0 ; i < numPlayers ; i++)
+            
+            
+        }//end else (banca > 7.5)
+        
+}
+
+
 </script>
 <style>
 .interfaz{
-    height:8%;
+    height:10%;
     width:100%;
     background-color:green;
     
@@ -287,44 +478,26 @@ function disAble(disable){
 	float: left;
 	background-color: green;
 }
+.texto{
+    text-align: center;
+    background-color: green;
+}
 </style>
 </head>
+
+
 <body>
-<div id="usuario" class="tablero">
-    <div id='1' class='cartas'></div> 
-    <div id='2' class='cartas'></div>
-    <div id='3' class='cartas'></div>
-    <div id='4' class='cartas'></div>
-    <div id='5' class='cartas'></div>
-    <div id='6' class='cartas'></div>
-    <div id='7' class='cartas'></div>
-    <div id='8' class='cartas'></div>
-    <div id='9' class='cartas'></div>
-    <div id='10' class='cartas'></div>
-    <div id='11' class='cartas'></div>
-    <div id='12' class='cartas'></div>
-    <div id='13' class='cartas'></div>
+<div id="jugador">
+    <div id="usuario" class="tablero" align="center">
+        <br/>
+        <br/>
+        <input type="button" value="1 jugador" onclick="jugadores(1, true)" />
+        <br/>
+        <input type="button" value="2 jugadores" onclick="jugadores(2, true)" />
+        <br/>
+        <input type="button" value="3 jugadores" onclick="jugadores(3, true)" />
+    </div><!-- end del div de los usuarios con sus cartas -->
 </div>
-<div id="interfaz" class="interfaz" align="center">
-    <input id='carta' type='button' value='Pedir carta' onclick='pedirCarta()'  align='center'> 
-    <br/> 
-    <input id='planto' type='button' value='Planto' onclick='planto()'  align='center'> 
-    <div id='apuesta' class='interfaz'></div>
-</div>
-<div id="banca" class="tablero">
-    <div id='1' class='cartas'></div> 
-    <div id='2' class='cartas'></div>
-    <div id='3' class='cartas'></div>
-    <div id='4' class='cartas'></div>
-    <div id='5' class='cartas'></div>
-    <div id='6' class='cartas'></div>
-    <div id='7' class='cartas'></div>
-    <div id='8' class='cartas'></div>
-    <div id='9' class='cartas'></div>
-    <div id='10' class='cartas'></div>
-    <div id='11' class='cartas'></div>
-    <div id='12' class='cartas'></div>
-    <div id='13' class='cartas'></div>
-</div>
+<!-- end del div del jugador para poder hacer varios jugadores -->
 </body>
 </html>

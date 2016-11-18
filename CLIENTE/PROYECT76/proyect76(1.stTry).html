@@ -1,0 +1,340 @@
+<doctype html>
+<html>
+<head>
+<script language="javascript">
+
+//variables que necesitaremos despues
+var valorCarta; // variable para definir el numero aleatorio como carta
+var numRandom; //variable para un numero aleatorio
+var miCuenta = 0; //variable para mi puntuacion
+var banca = 0; //variable para la puntuacion de la banca
+var repetidas = []; //variable para guardar los numeros aleatorios que han salido
+var miDinero = 50 //cada vez que empezemos una nueva partida nos daran 50 euros para apostar
+var heApostado = false; //variable para controlar si he apostado
+
+
+function restart(){
+    if(miDinero > 0){
+        
+        //reinicializamos variables y restauramos los divs
+        miCuenta = 0; 
+        banca = 0; 
+        repetidas = []; 
+        heApostado = false;
+        //reiniciaremos los divs de las cartas
+        //cogeremos los divs principales
+        var divUsuario = document.getElementById("usuario"); //div del usuario
+        var divBanca = document.getElementById("banca"); //div de la banca
+        //mediante for reiniciaremos todos los divs que contengan los divs maestros
+        for (var i = 0; i < 13 ; i++){
+            divUsuario.getElementsByTagName("div")[i].innerHTML="";
+            divBanca.getElementsByTagName("div")[i].innerHTML="";
+        }
+        //pondremos lo que veiamos al principio del todoo
+        document.getElementById("interfaz").innerHTML=
+          " <input id='carta' type='button' value='Pedir carta' onclick='pedirCarta()'  align='center'> "
+        + " <br/> "
+        + " <input id='planto' type='button' value='Planto' onclick='planto()'  align='center'> "
+        + " <div id='apuesta' class='interfaz'> "
+        + " <br><input type='text' class='texto' value='Tu dinero: " + miDinero + "€' readonly>"
+        + " </div>";
+        
+    }
+    
+    else {
+        //reiniciaremos los divs de las cartas
+        //cogeremos los divs principales
+        var divUsuario = document.getElementById("usuario"); //div del usuario
+        var divBanca = document.getElementById("banca"); //div de la banca
+        //mediante for reiniciaremos todos los divs que contengan los divs maestros
+        for (var i = 0; i < 13 ; i++){
+            divUsuario.getElementsByTagName("div")[i].innerHTML="";
+            divBanca.getElementsByTagName("div")[i].innerHTML="";
+        }
+        //pondremos lo que veiamos al principio del todoo
+        document.getElementById("interfaz").innerHTML=
+          "!!VETE A CASA!!"
+          + "<br> NO PIERDAS MAS DINERO "
+          + "<br><input id='game' type='button' value='Juego Nuevo' onclick='newGame()'>";
+    }
+   
+}
+
+function pedirCarta(){
+
+    //pide una carta
+    getCarta();
+    //muestra la carta
+    mostrar(numRandom, "usuario");
+    //hacer cuentas para que llegemos solo hasta 7'5
+    miCuenta = valorCarta + miCuenta ;
+    //apostar
+    apostar();
+    if(miCuenta > 7.5){
+        //hacemos las cuentas de dinero
+        var apostado = document.getElementById("cuanto").value;
+        miDinero = miDinero - parseInt(apostado);
+        //cambiamos el contenido del div central para poner el resultado y un boton para jugar de nuevo
+        document.getElementById("interfaz").innerHTML=
+          "!YOU LOSE!"
+        + "<br/><br/>"
+        + "<input type='text' class='texto' value='Tu dinero: " + miDinero + "€' readonly>" 
+        + "<br/>"
+        + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+    }
+ 
+}//end function pedirCarta
+
+function planto(){
+    
+    //pide una carta
+    getCarta();
+    //muestra la carta
+    mostrar(numRandom, "banca");
+    //sumar los datos de la banca 
+    banca = banca + valorCarta;
+    //llamar de nuevo a la funcion en caso de que no este ganando con un delay de 1000 milisegundos (1sec)
+    if(banca < miCuenta & banca < 7.5){
+ 
+        setTimeout(planto, 1000);
+        
+    }
+    else {
+        //cambiamos el contenido del div central para poner el resultado y un boton para jugar de nuevo
+        if(banca > 7.5){
+            //hacemos cuentas de dinero
+            var apostado = document.getElementById("cuanto").value;
+            miDinero = miDinero + parseInt(apostado);
+            document.getElementById("interfaz").innerHTML=
+              "!YOU WIN!"
+            + "<br/><br/>"
+            + "<input type'text' class='texto' value='Tu dinero: " + miDinero + "€' readonly>" 
+            + "<br/>"
+            + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+            
+
+        }
+        else{
+            //hacemos cuentas de dinero
+            var apostado = document.getElementById("cuanto").value;
+            miDinero = miDinero - parseInt(apostado);
+            document.getElementById("interfaz").innerHTML=
+              "!YOU LOSE!"
+            + "<br/><br/>"
+            + "<input type'text' class='texto' value=' Tu dinero: " + miDinero + "€' readonly>" 
+            + "<br/>"
+            + "<input id='again' type='button' value='Play Again' onclick='restart()'>";
+        }
+    }
+}//end function planto
+
+function getCarta(){
+    
+    //un numero random el cual identificara la carta
+    //un numero random del 1 a 40
+    numRandom = Math.floor( ( Math.random() * 40 ) + 1 );
+    //comprobar si esta repetida
+    repetido(numRandom);
+    //definir el numero random como carta
+    switch(numRandom){
+        case 1 :
+        case 11 :
+        case 21 :
+        case 31 :
+                valorCarta = 1;
+                break;
+        case 2 :
+        case 12 :
+        case 22 :
+        case 32 :
+                valorCarta = 2;
+                break;
+        case 3 :
+        case 13 :
+        case 23 :
+        case 33 :
+                valorCarta = 3;
+                break;
+        case 4 :
+        case 14 :
+        case 24 :
+        case 34 :
+                valorCarta = 4;
+                break;
+        case 5 :
+        case 15 :
+        case 25 :
+        case 35 :
+                valorCarta = 5;
+                break;
+        case 6 :
+        case 16 :
+        case 26 :
+        case 36 :
+                valorCarta = 6;
+                break;
+        case 7 :
+        case 17 :
+        case 27 :
+        case 37 :
+                valorCarta = 7;
+                break;
+        default :
+                valorCarta = 0.5;
+                break;
+    }//end switch
+    //devuelve el valor de la carta
+    return valorCarta;
+    
+}
+
+function mostrar(numRandom, jugador){
+    
+        //Mostrar cartas en los divs
+        //diferenciar usuario y banca
+        if (jugador == "usuario"){
+            var divMaestro = document.getElementById("usuario");
+        }
+        else{
+            var divMaestro = document.getElementById("banca");
+        }
+        var div = divMaestro.getElementsByTagName("div"); //pillar los divs de las cartas
+        for ( var i = 0 ; i < div.length ; i++){
+            if (div[i].innerHTML == ""){
+                //mostrar carta y //sumar los valores de las cartas a nuestra puntuacion
+                if(numRandom < 11){
+                    div[i].innerHTML="<img src='oro/" + numRandom + ".jpg'>";
+                }
+                else if (numRandom < 21){
+                    div[i].innerHTML="<img src='copa/" + (numRandom-10) + ".jpg'>";
+                }
+                else if (numRandom < 31 ){
+                    div[i].innerHTML="<img src='espada/" + (numRandom-20) + ".jpg'>";
+                }
+                else{
+                    div[i].innerHTML="<img src='basto/" + (numRandom-30) + ".jpg'>";
+                }
+            
+            break;
+                
+            }//end if(div[i].innerHTML == "")
+        }//end for
+        
+}//end function mostrar
+
+function repetido(numRandom){
+    //para que la carta no se repita 
+    //contador de repetidas
+    var contRepe=0;
+    //meter el numero en el array
+    repetidas.push(numRandom)
+    //conprobar si esta en el array, por cada vez que este añade +1 al contador, 
+    //y en caso de que el contador sea 2 o mayor, estara repetida y volvera a llamar a la funcion para que cree de nuevo el numero
+    for(var i = 0 ; i < repetidas.length ; i++){
+        if(numRandom == repetidas[i]){
+            contRepe++
+            if(contRepe>=2){
+                getCarta();
+            }
+        }
+    }
+}
+
+//funcion para refrescar la pagina cuando le demos a un boton de jugar de nuevo
+//el boton aparece cuando ganas o pierdes junto con ese resultado
+function newGame(){
+    window.location.reload();
+}
+
+//despues de pedir tu primera carta tienes que apostar
+//siempre has de apostar un minimo
+//mientras no apuestes no puedes pedir carta ni plantarte
+function apostar(){
+    //solo funcionara si no has apostado antes
+    if(heApostado != true){
+    disAble(true);
+    document.getElementById("apuesta").innerHTML=
+      "<input id='cuanto' class='texto' type='number' max='" + miDinero + "' min='1' onchange='disAble("+false+")'>"
+    + "<br><input type='text' class='texto' value='Tu dinero: " + miDinero + "€' readonly>";
+    }
+    //identificar que hemos apostado
+    heApostado = true;
+}
+
+function disAble(disable){
+    if(disable == true){
+        document.getElementById("carta").setAttribute("disabled","");
+        document.getElementById("planto").setAttribute("disabled","")
+    }
+    else{
+        document.getElementById("carta").removeAttribute("disabled");
+        document.getElementById("planto").removeAttribute("disabled");
+    }
+    
+}
+
+</script>
+<style>
+.interfaz{
+    height:10%;
+    width:100%;
+    background-color:green;
+    
+}
+.tablero{ 
+	width: 100%; 
+	height: 20%;
+	background-color : green;
+}
+.cartas{ 
+    margin: auto;
+	float: left;
+	background-color: green;
+}
+.texto{
+    text-align: center;
+    background-color: green;
+}
+</style>
+</head>
+<body>
+<div id="usuario" class="tablero">
+    <div id='1' class='cartas'></div> 
+    <div id='2' class='cartas'></div>
+    <div id='3' class='cartas'></div>
+    <div id='4' class='cartas'></div>
+    <div id='5' class='cartas'></div>
+    <div id='6' class='cartas'></div>
+    <div id='7' class='cartas'></div>
+    <div id='8' class='cartas'></div>
+    <div id='9' class='cartas'></div>
+    <div id='10' class='cartas'></div>
+    <div id='11' class='cartas'></div>
+    <div id='12' class='cartas'></div>
+    <div id='13' class='cartas'></div>
+</div>
+<div id="interfaz" class="interfaz" align="center">
+    <input id='carta' type='button' value='Pedir carta' onclick='pedirCarta()'  align='center'> 
+    <br/> 
+    <input id='planto' type='button' value='Planto' onclick='planto()'  align='center'> 
+    <div id='apuesta' class='interfaz'>
+    <br><input type='text' class='texto' value='Tu dinero: 50€' readonly>
+    </div>
+</div>
+<div id="banca" class="tablero">
+    <div id='1' class='cartas'></div> 
+    <div id='2' class='cartas'></div>
+    <div id='3' class='cartas'></div>
+    <div id='4' class='cartas'></div>
+    <div id='5' class='cartas'></div>
+    <div id='6' class='cartas'></div>
+    <div id='7' class='cartas'></div>
+    <div id='8' class='cartas'></div>
+    <div id='9' class='cartas'></div>
+    <div id='10' class='cartas'></div>
+    <div id='11' class='cartas'></div>
+    <div id='12' class='cartas'></div>
+    <div id='13' class='cartas'></div>
+</div>
+</body>
+</html>
