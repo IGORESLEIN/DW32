@@ -2,7 +2,6 @@
 
 # Trabajos de clase
 
-|
 |-> servidor
     ->  ...
     -> trabajos api
